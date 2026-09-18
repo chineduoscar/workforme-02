@@ -1,6 +1,7 @@
-const menuBtn = document.getElementById("menuBtn");
-const smallNav = document.getElementById("smallNav");
 const artisanSection = document.getElementById("artisanSection");
+const subBtn = document.getElementById("subBtn");
+const subModal = document.getElementById("subModal");
+const closeBtn = document.getElementById("closeBtn");
 
 const artisanData = [
   {
@@ -35,9 +36,45 @@ const artisanData = [
   },
 ];
 
-menuBtn.addEventListener("click", toggleNav);
+artisanSection.innerHTML = artisanData
+  .map((data) => {
+    return `<div
+            class="rounded-lg border border-gray-100 p-5 flex items-center flex-col gap-5 shadow-sm"
+          >
+            <img
+              src=${data.image}
+              alt=""
+              class="w-15 h-15 rounded-full"
+            />
+            <h1 class="font-bold text-2xl">${data.name}</h1>
+            <p
+              class="rounded-full px-2 py-1 bg-red-50 text-red-500 font-semibold"
+            >
+              ${data.job}
+            </p>
+          </div>`;
+  })
+  .join(" ");
 
-function toggleNav() {
-  smallNav.classList.toggle("hidden");
-  smallNav.classList.toggle("flex");
+const openModal = () => {
+  subModal.classList.remove("hidden");
+  subModal.classList.add("flex");
+};
+
+const closeModal = () => {
+  subModal.classList.add("hidden");
+  subModal.classList.remove("flex");
+};
+
+closeBtn.addEventListener("click", closeModal);
+subBtn.addEventListener("click", openModal);
+
+window.addEventListener("click", windowCloseModal);
+
+function windowCloseModal(e) {
+  console.log(e.target);
+  console.log(subModal);
+  if (e.target === subModal) {
+    closeModal();
+  }
 }
